@@ -3,7 +3,7 @@
 Some simple ideas in code how we could be using phobos-js in practice.
 
 The core ideas are
-- No multiprocessing, keep it simple. 
+- No multiprocessing, keep it simple.
   - No need to farm out resources on each node, assume micro instances
   - This alone should greatly reduce complexity of the Phobos code and make it easier to understand/contribute
   - Instead, scale horizontally
@@ -14,7 +14,7 @@ The core ideas are
 - Move as much config as possible to `phobos.json`
 - Require as little config as possible inside the users' services, if any.
 - Think just as much about helping testing the users' services as writing them in the first place (similar to mappersmith)
-- Consider possibility of plugin support such as 
+- Consider possibility of plugin support such as
   - phobos-db-checkpoint
   - phobos-checkpoint-ui
   - phobos-prometheus (provide collectors and exporters for internal consumer/producer metrics)
