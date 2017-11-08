@@ -35,3 +35,5 @@ const app = createConsumer({
 app.on('messageReceived', (message) => {
   const statement = createStatement(message.data())
 })
+
+app.run()

@@ -23,3 +23,5 @@ app.on('messageReceived', (message) => {
   const decodedMessage = avro.fromBuffer(message)
   const statement = createStatement(decodedMessage.data())
 })
+
+app.run()
