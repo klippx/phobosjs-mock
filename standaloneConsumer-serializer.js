@@ -1,5 +1,5 @@
 /**
- * Standalone consumer app - beforeConsume hook
+ * Standalone consumer app - serializer to decode messages before consuming
  *
  * This app consumes the statement_available kafka topic and decodes each message
  * with avro using the account_statement_available avro schema, and persist it
@@ -25,14 +25,26 @@ await registryClient.getLatestSubjectSchema('account_statement_available').then(
   type = avro.parse(schema)
 })
 
+/**
+ * Serializer, alternative 1
+ */
 const app = createConsumer({
   topic: 'statement_available',
-  beforeConsume: (payload) => {
-    return avro.fromBuffer(payload)
+  keySerializer: async key => key.toString(),
+  valueSerializer: async value => await avro.fromBuffer(value)
+})
+
+/**
+ * Serializer, alternative 2
+ */
+const app = createConsumer({
+  topic: 'statement_available',
+  serializer: async ({ key, value }) => {
+    return { key: key.toString(), value: await avro.fromBuffer(value) }
   }
 })
 
-app.on('messageReceived', (message) => {
+app.onMessage(async (message, metadata) => {
   const statement = createStatement(message.data())
 })
 

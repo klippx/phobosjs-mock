@@ -1,0 +1,44 @@
+module.exports = {
+  // Producer config
+  producer: {
+    max_buffer_size: 1000,
+    max_buffer_bytesize: 10000000,
+    '...': '...',
+  },
+  // Consumer config
+  consumer: {
+    group_id: 'my_consumer_app_id',
+    start_from_beginning: true,
+    backoff: {
+      min_ms: 1000,
+      max_ms: 60000,
+    },
+    max_bytes_per_partition: 524288,
+    min_bytes: 1,
+    max_wait_time: 5,
+    force_encoding: 'UTF-8',
+    session_timeout: 30,
+    offset_commit_interval: 10,
+    heartbeat_interval: 10,
+    '...': '...',
+  },
+  // kafkajs Client config (?)
+  kafkajs: {
+    client_id: 'phobosjs',
+    ssl_ca_cert: '...',
+    ssl_client_cert: '...',
+    ssl_client_cert_key: '...',
+    connect_timeout: 1,
+    socket_timeout: 1,
+    seed_brokers: [
+      {
+        host: 'localhost',
+        port: 9092,
+      },
+    ],
+  },
+  // logger config
+  logger: {
+    filename: '(optional, if ommited output to STDOUT) ex: log/phobos.log',
+  },
+}
