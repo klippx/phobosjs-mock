@@ -4,15 +4,26 @@
  * This app consumes the statement_available kafka topic and persists it
  * to the database as a Statement.
  *
+ * The idea of a "checkpoint" is to provide a way to wrap the consumption of a message
+ * around a try/catch and allowing for handling errors, retries, and even success results
+ * in a configurable manner.
+ *
  */
 const { createConsumer } = require('phobos')
-const { createCheckpoint } = require('phobos-db-checkpoint')
+const { createDBCheckpoint } = require('phobos-db-checkpoint')
 const { createStatement } = require('./statement')
 
-// Instantiate a database checkPoint handler with config from .phobosdbcheckpointjs
-const checkPoint = createCheckpoint()
+/**
+ * Instantiate a database checkPoint handler with config from .phobosdbcheckpointjs
+ *
+ * checkPoint implements an #messageWrapper closure to wrap the consumption of a message
+ * which eventually invokes onMessage
+ *
+ */
+const checkPoint = createDBCheckpoint()
 
-const app = createConsumer({ topic: 'statement_available', checkPoint: checkPoint })
+const app = createConsumer({ topic: 'statement_available' })
+app.registerCheckpoint(checkPoint)
 
 /**
  * If the callback is successful, the message will be persisted in checkPoint as

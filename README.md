@@ -14,8 +14,9 @@ The core ideas are
 - Move as much config as possible to `phobos.json`
 - Require as little config as possible inside the users' services, if any.
 - Think just as much about helping testing the users' services as writing them in the first place (similar to mappersmith)
+- [Possibility to decode avro encoded kafka messages](standaloneConsumer-serializer.js)
+- [Possiblility of wrapping the batch/message consumption and dealing with errors/success](standaloneConsumer-checkpoint.js)
 - Consider possibility of plugin support such as
-  - [phobos-db-checkpoint](standaloneConsumer-checkpoint.js)
   - phobos-checkpoint-ui
   - phobos-prometheus (provide collectors and exporters for internal consumer/producer metrics)
   - phobos-grafana (provide some rudimentary graphing of the data exported above)
